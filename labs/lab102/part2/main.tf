@@ -39,3 +39,26 @@ resource "time_sleep" "wait_for_ip" {
     create_duration = "10s"  # Wait for 10 seconds
 }
 
+resource "null_resource" "run_script" {
+    provisioner "local-exec" {
+        command = "echo 'Hello Jb Class'"
+    }
+}
+
+variable "nullip" {
+    default = ""
+}
+
+resource "null_resource" "check_public_ip" {
+    provisioner "local-exec" {
+        command = <<EOT
+        if [ -z "${aws_instance.vm.public_ip}" ]; then
+            echo "ERROR: Public IP address was not assigned." >&2
+            exit 1
+        fi
+        EOT
+    }
+
+    depends_on = [aws_instance.vm]
+}
+
