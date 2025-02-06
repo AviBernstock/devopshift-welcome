@@ -12,23 +12,48 @@ variable "emptyip" {
    default = ""
 }
 
+variable "ingress_ports" {
+  type    = list(number)
+  default = [22, 80, 443]  # Example: SSH, HTTP, HTTPS
+}
 
 resource "aws_security_group" "sg" {
- ingress {
-   from_port   = 22
-   to_port     = 22
-   protocol    = "tcp"
-   cidr_blocks = ["0.0.0.0/0"]
- }
 
+  dynamic "ingress" {
+    for_each = var.ingress_ports
+    content {
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
 
- egress {
-   from_port   = 0
-   to_port     = 0
-   protocol    = "-1"
-   cidr_blocks = ["0.0.0.0/0"]
- }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
+
+
+# resource "aws_security_group" "sg" {
+#  ingress {
+#    from_port   = 22
+#    to_port     = 22
+#    protocol    = "tcp"
+#    cidr_blocks = ["0.0.0.0/0"]
+#  }
+
+
+#  egress {
+#    from_port   = 0
+#    to_port     = 0
+#    protocol    = "-1"
+#    cidr_blocks = ["0.0.0.0/0"]
+#  }
+# }
 
 
 resource "aws_instance" "vm" {
@@ -52,9 +77,7 @@ output "vm_public_ip" {
  depends_on = [ null_resource.check_public_ip ]
 }
 
-variable "ami"{
-    
-}
+variable "ami"{}
 
 output "ami"{
     value = "the ami is: ${var.ami}"
