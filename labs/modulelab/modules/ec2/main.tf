@@ -102,3 +102,27 @@ resource "null_resource" "check_public_ip" {
 
  depends_on = [aws_instance.vm]
 }
+
+
+
+variable "s3_buckets" {
+  type    = set(string)
+  default = ["prod", "dev"]
+}
+
+variable "enabled_services"{
+    type    = set(string)
+    default = []
+}
+
+resource "aws_s3_bucket" "buckets" {
+  for_each = { for b in var.s3_buckets : b => b if contains(var.enabled_services, b) }
+
+  bucket = "my-app-${each.key}"
+
+
+  tags = {
+    Name        = "Bucket for ${each.key}"
+    Environment = "${each.key}"
+  }
+}
