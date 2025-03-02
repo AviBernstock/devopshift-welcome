@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = 'dockerhub-credentials' // ID of the DockerHub credentials
-        IMAGE_NAME = 'avibern/nginx:latest'
+        DOCKERHUB_CREDENTIALS = 'dockercred' // ID of the DockerHub credentials
+        IMAGE_NAME = 'frenzy669/alpine:latest'
     }
 
     stages {
