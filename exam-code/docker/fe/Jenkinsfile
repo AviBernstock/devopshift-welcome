@@ -75,7 +75,8 @@ pipeline {
         stage('Build Docker Image') { //todo: update the <.....>
             steps {
                 script {   // Locate the Dockerfile under the fe/be projects
-                sh """pwd
+                sh """cd ./exam-code/docker/${env.FE_BE}
+                    pwd
                     ls
                     docker build -t ${env.DOCKER_REGISTRY}/${REPO_NAME}:${env.BUILD_NUMBER} .
                     docker tag ${DOCKER_REGISTRY}/${REPO_NAME}:${BUILD_NUMBER} ${DOCKER_REGISTRY}/${REPO_NAME}:latest
