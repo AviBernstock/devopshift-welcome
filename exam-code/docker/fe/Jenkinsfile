@@ -22,9 +22,10 @@ pipeline {
 
         stage('Lint & Security Scan') {
             parallel {
-                dir("$HOME_DIR"){
+                //dir("$HOME_DIR"){
                     stage('Flake8 Linting') {
                         steps {
+                            dir("$HOME_DIR"){
                             script {
                                 sh """if ! command -v flake8 &> /dev/null; then
                                         echo "Installing flake8..."
@@ -36,11 +37,13 @@ pipeline {
                                     flake8 ./src/main$FE_BE.py
                                 """  // // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
                             }
+                            }
                         }
                     }
 
                     stage('Bandit Security Scan') {
                         steps {
+                            dir("$HOME_DIR"){
                             script {
                                 sh """if ! command -v bandit &> /dev/null; then
                                         echo "Installing flake8..."
@@ -52,9 +55,10 @@ pipeline {
                                     bandit -r ./src/main$FE_BE.py
                                 """  //'bandit -r ./src/mainfe.py'  // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
                             }
+                            }
                         }
                     }
-                }
+                //}
             }
         }
         
