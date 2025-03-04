@@ -76,7 +76,7 @@ pipeline {
             steps {
                 script {   // Locate the Dockerfile under the fe/be projects
                     sh "cd ./exam-code/docker/"
-                    sh "docker build -t ${env.DOCKER_REGISTRY}/your-app:${env.BUILD_NUMBER} ."
+                    sh "docker build -t ${env.DOCKER_REGISTRY}/${REPO_NAME}:${env.BUILD_NUMBER} ."
                     sh "docker tag ${DOCKER_REGISTRY}/your-app:${BUILD_NUMBER} ${DOCKER_REGISTRY}/your-app:latest"
                 }
             }
