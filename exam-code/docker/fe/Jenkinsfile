@@ -34,7 +34,7 @@ pipeline {
                                     fi
                                     pwd
                                     ls
-                                    flake8 ./exam-code/docker/src/main${env.FE_BE}.py
+                                    flake8 ./exam-code/docker/${env.FE_BE}/src/main${env.FE_BE}.py
                                 """  // // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
                             }
                             //}
@@ -54,7 +54,7 @@ pipeline {
 
                                     pwd
                                     ls
-                                    bandit -r ./exam-code/docker/src/main${env.FE_BE}.py
+                                    bandit -r ./exam-code/docker/${env.FE_BE}/src/main${env.FE_BE}.py
                                 """  //'bandit -r ./src/mainfe.py'  // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
                             }
                             //}
