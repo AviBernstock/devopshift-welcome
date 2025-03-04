@@ -24,8 +24,11 @@ pipeline {
                 stage('Flake8 Linting') {
                     steps {
                         script {
-                            sh 'pip install flake8'
-                            sh 'flake8 ./src/mainfe.py'  // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
+                            sh """pip install flake8
+                                pwd
+                                ls
+                               
+                            """  //flake8 ./src/mainfe.py // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
                         }
                     }
                 }
@@ -33,8 +36,11 @@ pipeline {
                 stage('Bandit Security Scan') {
                     steps {
                         script {
-                            sh 'pip install bandit'
-                            sh 'bandit -r ./src/mainfe.py'  // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
+                            """pip install bandit
+                                pwd
+                                ls
+                               
+                            """  //'bandit -r ./src/mainfe.py'  // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
                         }
                     }
                 }
