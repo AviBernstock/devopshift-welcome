@@ -95,12 +95,13 @@ pipeline {
 
         stage('Integration Test with Docker Compose') { //maybe change from "docker-compose" to "docker compose"
             steps {
+
                 script {
                     sh '''cd ./exam-code/docker/
                         curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
                         docker-compose up -d
                         sleep 10  # Allow services to start 
-                        # curl -f http://localhost:5002 || exit 1
+                        curl -f http://localhost:5002 || exit 1
                         docker-compose down
                     '''//curl -f http://localhost:5002 || exit 1  # Adjust for backend if needed
                 }
@@ -113,7 +114,7 @@ pipeline {
                     sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin"
                     sh "docker push ${DOCKER_REGISTRY}/${REPO_NAME}:${BUILD_NUMBER}"
                     sh "docker push ${DOCKER_REGISTRY}/${REPO_NAME}:latest"
-                }
+                }
+            }
         }
-    }
 }
