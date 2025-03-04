@@ -27,7 +27,7 @@ pipeline {
                         steps {
                             //dir("${env.HOME_DIR}"){
                             script {
-                                // sh """echo 'moved to ${env.HOME_DIR}'
+                                sh """echo 'in stage Flake8 Linting'"""
                                 //     if ! command -v flake8 &> /dev/null; then
                                 //         echo 'Installing flake8...'
                                 //         pip install flake8
@@ -45,7 +45,7 @@ pipeline {
                         steps {
                             //dir("${env.HOME_DIR}"){
                             script {
-                                // sh """echo 'moved to ${env.HOME_DIR}'
+                                sh """echo 'in stage Bandit Security Scan'"""
                                     
                                 //     if ! command -v bandit &> /dev/null; then
                                 //         echo 'Installing flake8...'
