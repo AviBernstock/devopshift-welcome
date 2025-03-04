@@ -1,0 +1,3 @@
+GITBRANCH=workshop/argo-jenkins-exam
+GITURL=github.com/AviBernstock/devopshift-welcome
+GITUSERNAME=AviBernstock
