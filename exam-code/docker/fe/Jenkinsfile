@@ -45,7 +45,7 @@ pipeline {
                         steps {
                            
                             script {
-                                sh """echo "moved to $HOME_DIR"
+                                sh """echo "moved to !!!!!!!!!!!!!!!"
                                     cd $HOME_DIR
                                     
                                     if ! command -v bandit &> /dev/null; then
