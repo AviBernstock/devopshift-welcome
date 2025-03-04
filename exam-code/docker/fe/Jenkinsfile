@@ -25,7 +25,7 @@ pipeline {
                 //dir("$HOME_DIR"){
                     stage('Flake8 Linting') {
                         steps {
-                            dir("${env.HOME_DIR}"){
+                            //dir("${env.HOME_DIR}"){
                             script {
                                 sh """echo 'moved to ${env.HOME_DIR}'
                                     if ! command -v flake8 &> /dev/null; then
@@ -37,13 +37,13 @@ pipeline {
                                     flake8 ./exam-code/docker/src/main${env.FE_BE}.py
                                 """  // // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
                             }
-                            }
+                            //}
                         }
                     }
 
                     stage('Bandit Security Scan') {
                         steps {
-                            dir("${env.HOME_DIR}"){
+                            //dir("${env.HOME_DIR}"){
                             script {
                                 sh """echo 'moved to ${env.HOME_DIR}'
                                     
@@ -57,7 +57,7 @@ pipeline {
                                     bandit -r ./exam-code/docker/src/main${env.FE_BE}.py
                                 """  //'bandit -r ./src/mainfe.py'  // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
                             }
-                            }
+                            //}
                         }
                     }
                 //}
