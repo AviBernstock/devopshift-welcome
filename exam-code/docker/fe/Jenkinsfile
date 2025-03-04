@@ -27,14 +27,15 @@ pipeline {
                         steps {
                             
                             script {
-                                sh """cd $HOME_DIR
+                                sh """echo 'moved to !!!!!!!!!!!!!!!'
+                                    cd !!!!!!!!!
                                     if ! command -v flake8 &> /dev/null; then
-                                        echo "Installing flake8..."
+                                        echo 'Installing flake8...'
                                         pip install flake8
                                     fi
                                     pwd
                                     ls
-                                    flake8 ./src/main$FE_BE.py
+                                    flake8 ./src/mainfe.py
                                 """  // // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
                             }
                             
@@ -45,17 +46,17 @@ pipeline {
                         steps {
                            
                             script {
-                                sh """echo "moved to !!!!!!!!!!!!!!!"
-                                    cd $HOME_DIR
+                                sh """echo 'moved to !!!!!!!!!!!!!!!'
+                                    cd !!!!!!!!!!!!
                                     
                                     if ! command -v bandit &> /dev/null; then
-                                        echo "Installing flake8..."
+                                        echo 'Installing flake8...'
                                         pip install bandit
                                     fi
 
                                     pwd
                                     ls
-                                    bandit -r ./src/main$FE_BE.py
+                                    bandit -r ./src/mainfe.py
                                 """  //'bandit -r ./src/mainfe.py'  // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
                             }
                             
