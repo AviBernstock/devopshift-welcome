@@ -25,7 +25,7 @@ pipeline {
                 //dir("$HOME_DIR"){
                     stage('Flake8 Linting') {
                         steps {
-                            dir("$HOME_DIR"){
+                            
                             script {
                                 sh """cd $HOME_DIR
                                     if ! command -v flake8 &> /dev/null; then
@@ -37,7 +37,7 @@ pipeline {
                                     flake8 ./src/main$FE_BE.py
                                 """  // // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
                             }
-                            }
+                            
                         }
                     }
 
@@ -45,7 +45,9 @@ pipeline {
                         steps {
                            
                             script {
-                                sh """cd $HOME_DIR
+                                sh """echo "moved to $HOME_DIR"
+                                    cd $HOME_DIR
+                                    
                                     if ! command -v bandit &> /dev/null; then
                                         echo "Installing flake8..."
                                         pip install bandit
