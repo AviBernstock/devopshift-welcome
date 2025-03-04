@@ -6,8 +6,8 @@ pipeline {
     }
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('docker-hub-creds') // configure jenkins with your credentials 
-        DOCKER_REGISTRY = 'YOUR DOCKERHUB USERID'
+        DOCKERHUB_CREDENTIALS = credentials('docker-creds') // configure jenkins with your credentials 
+        DOCKER_REGISTRY = 'frenzy669' //'YOUR DOCKERHUB USERID'
         REPO_NAME = 'fe-exam'  //### IMAGE NAME -  Change to 'be-exam' WHEN creating the backend pipeline
         IMAGE_TAG = "${env.BUILD_NUMBER}"
     }
@@ -52,8 +52,8 @@ pipeline {
         stage('Build Docker Image') { //todo: update the <.....>
             steps {
                 script {   // Locate the Dockerfile under the fe/be projects
-                    sh "docker build -t <your-dockerhub-username>/your-app:$BUILD_NUMBER ."
-                    sh "docker tag <your-dockerhub-username>/your-app:$BUILD_NUMBER <your-dockerhub-username>/your-app:latest"
+                    sh "docker build -t frenzy669/your-app:$BUILD_NUMBER ."
+                    sh "docker tag frenzy669/your-app:$BUILD_NUMBER frenzy669/your-app:latest"
                 }
             }
         }
@@ -61,7 +61,7 @@ pipeline {
         stage('Run Tests in Container') {
             steps {
                 script {
-                    sh "docker run --rm <your-dockerhub-username>/your-app:$BUILD_NUMBER pytest tests/"  // Change to '/home/ubuntu/workarea/jb/exam-code/docker/be/requirements.txt' for backend pipeline
+                    sh "docker run --rm frenzy669/your-app:$BUILD_NUMBER pytest tests/"  // Change to '/home/ubuntu/workarea/jb/exam-code/docker/be/requirements.txt' for backend pipeline
                 }
             }
         }
@@ -82,8 +82,8 @@ pipeline {
             steps {
                 script {
                     sh """echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-                        docker push <your-dockerhub-username>/your-app:$BUILD_NUMBER
-                        docker push <your-dockerhub-username>/your-app:latest
+                        docker push frenzy669/your-app:$BUILD_NUMBER
+                        docker push frenzy669/your-app:latest
                     """
                 }
             }
