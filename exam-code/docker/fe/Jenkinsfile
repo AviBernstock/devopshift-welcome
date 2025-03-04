@@ -67,7 +67,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    sh 'pip install -r ./exam-code/docker/requirements.txt'  // Change to '/home/ubuntu/workarea/jb/exam-code/docker/be/requirements.txt' for backend pipeline
+                    sh "pip install -r ./exam-code/docker/${env.FE_BE}/requirements.txt" 
                 }
             }
         }
