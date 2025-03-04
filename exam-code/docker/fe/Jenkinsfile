@@ -21,8 +21,8 @@ pipeline {
         }
 
         stage('Lint & Security Scan') {
-            dir("$HOME_DIR"){
-                parallel {
+            parallel {
+                dir("$HOME_DIR"){
                     stage('Flake8 Linting') {
                         steps {
                             script {
