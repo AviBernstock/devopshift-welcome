@@ -27,7 +27,10 @@ pipeline {
                         steps {
                             dir("$HOME_DIR"){
                             script {
-                                sh """pip install flake8
+                                sh """if ! command -v flake8 &> /dev/null; then
+                                        echo "Installing flake8..."
+                                        pip install flake8
+                                    fi
                                     pwd
                                     ls
                                     flake8 ./src/main$FE_BE.py
