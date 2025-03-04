@@ -6,7 +6,7 @@ pipeline {
 
         DOCKERHUB_CREDENTIALS = credentials('docker-creds') // configure jenkins with your credentials 
         DOCKER_REGISTRY = 'frenzy669' //'YOUR DOCKERHUB USERID'
-        REPO_NAME = "$FE_BE-exam"  //### IMAGE NAME -  Change to 'be-exam' WHEN creating the backend pipeline
+        REPO_NAME = "${FE_BE}-exam"  //### IMAGE NAME -  Change to 'be-exam' WHEN creating the backend pipeline
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         
     }
