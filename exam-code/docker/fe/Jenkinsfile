@@ -4,15 +4,90 @@ pipeline {
             image 'python:3.10'
         }
     }
+
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('docker-hub-creds')
-        DOCKER_REGISTRY = 'yanivomc'
-        REPO_NAME = 'fe-exam'  // Change to 'be-exam' for backend pipeline
+        DOCKERHUB_CREDENTIALS = credentials('docker-creds') // configure jenkins with your credentials 
+        DOCKER_REGISTRY = 'frenzy669' //'YOUR DOCKERHUB USERID'
+        REPO_NAME = 'fe-exam'  //### IMAGE NAME -  Change to 'be-exam' WHEN creating the backend pipeline
         IMAGE_TAG = "${env.BUILD_NUMBER}"
-        
     }
+
     stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/AviBernstock/devopshift-welcome.git'
+            }
+        }
+
+        stage('Lint & Security Scan') {
+            parallel {
+                stage('Flake8 Linting') {
+                    steps {
+                        script {
+                            sh 'pip install flake8'
+                            sh 'flake8 ./src/mainfe.py'  // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
+                        }
+                    }
+                }
+
+                stage('Bandit Security Scan') {
+                    steps {
+                        script {
+                            sh 'pip install bandit'
+                            sh 'bandit -r ./src/mainfe.py'  // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
+                        }
+                    }
+                }
+            }
+        }
         
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    sh 'pip install -r ./requirements.txt'  // Change to '/home/ubuntu/workarea/jb/exam-code/docker/be/requirements.txt' for backend pipeline
+                }
+            }
+        }
         
+        stage('Build Docker Image') { //todo: update the <.....>
+            steps {
+                script {   // Locate the Dockerfile under the fe/be projects
+                    sh "docker build -t frenzy669/your-app:$BUILD_NUMBER ."
+                    sh "docker tag frenzy669/your-app:$BUILD_NUMBER frenzy669/your-app:latest"
+                }
+            }
+        }
+
+        stage('Run Tests in Container') {
+            steps {
+                script {
+                    sh "docker run --rm frenzy669/your-app:$BUILD_NUMBER pytest tests/"  // Change to '/home/ubuntu/workarea/jb/exam-code/docker/be/requirements.txt' for backend pipeline
+                }
+            }
+        }
+
+        stage('Integration Test with Docker Compose') { //I changed from "docker-compose" to "docker compose"
+            steps {
+                script {
+                    sh """docker compose up -d
+                        sleep 10  # Allow services to start
+                        curl -f http://localhost:5002 || exit 1  # Adjust for backend if needed
+                        docker compose down
+                    """
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    sh """echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                        docker push frenzy669/your-app:$BUILD_NUMBER
+                        docker push frenzy669/your-app:latest
+                    """
+                }
+            }
         
         }
+    }
+}
