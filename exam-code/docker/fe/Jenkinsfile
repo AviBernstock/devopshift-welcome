@@ -22,7 +22,7 @@ pipeline {
 
         stage('Lint & Security Scan') {
             parallel {
-                dir("$HOME_DIR"){
+                //dir("$HOME_DIR"){
                     stage('Flake8 Linting') {
                         steps {
                             dir("$HOME_DIR"){
@@ -54,7 +54,7 @@ pipeline {
                             }
                         }
                     }
-                }
+                //}
             }
         }
         
