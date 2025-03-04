@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/AviBernstock/devopshift-welcome.git'
+                git branch: 'workshop/argo-jenkins-exam', url: 'https://github.com/AviBernstock/devopshift-welcome.git'
             }
         }
 
