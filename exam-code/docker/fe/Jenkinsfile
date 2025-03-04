@@ -67,7 +67,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    sh 'pip install -r ./requirements.txt'  // Change to '/home/ubuntu/workarea/jb/exam-code/docker/be/requirements.txt' for backend pipeline
+                    sh 'pip install -r ./exam-code/docker/requirements.txt'  // Change to '/home/ubuntu/workarea/jb/exam-code/docker/be/requirements.txt' for backend pipeline
                 }
             }
         }
@@ -84,18 +84,18 @@ pipeline {
         stage('Run Tests in Container') {
             steps {
                 script {
-                    sh "docker run --rm $DOCKER_REGISTRY/your-app:$BUILD_NUMBER pytest tests/"  // Change to '/home/ubuntu/workarea/jb/exam-code/docker/be/requirements.txt' for backend pipeline
+                    sh "docker run --rm $DOCKER_REGISTRY/your-app:$BUILD_NUMBER pytest tests/"  
                 }
             }
         }
 
-        stage('Integration Test with Docker Compose') { //I changed from "docker-compose" to "docker compose"
+        stage('Integration Test with Docker Compose') { //maybe change from "docker-compose" to "docker compose"
             steps {
                 script {
-                    sh """docker compose up -d
+                    sh """docker-compose up -d
                         sleep 10  # Allow services to start
                         curl -f http://localhost:5002 || exit 1  # Adjust for backend if needed
-                        docker compose down
+                        docker-compose down
                     """
                 }
             }
