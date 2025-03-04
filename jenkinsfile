@@ -1,0 +1,48 @@
+pipeline {
+    agent {
+        docker {
+            image 'python:3.10'
+        }
+    }
+
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('docker-hub-creds') # configure jenkins with your credentials 
+        DOCKER_REGISTRY = 'YOUR DOCKERHUB USERID'
+        REPO_NAME = 'fe-exam'  //### IMAGE NAME -  Change to 'be-exam' WHEN creating the backend pipeline
+        IMAGE_TAG = "${env.BUILD_NUMBER}"
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/AviBernstock/devopshift-welcome.git'
+            }
+        }
+        stage('Lint & Security Scan') {
+            parallel {
+                stage('Flake8 Linting') {
+                    steps {
+                        script {
+                            sh 'pip install flake8'
+                            sh 'flake8 /home/ubuntu/workarea/jb/exam-code/docker/fe/src/mainfe.py'  // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
+                        }
+                    }
+                }
+
+                stage('Bandit Security Scan') {
+                    steps {
+                        script {
+                            sh 'pip install bandit'
+                            sh 'bandit -r /home/ubuntu/workarea/jb/exam-code/docker/fe/src/mainfe.py'  // Change to `/home/ubuntu/workarea/jb/exam-code/docker/be/src/mainbe.py` for backend pipeline
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Lint & Security Scan'){
+            
+        }
+        
+    }
+}
