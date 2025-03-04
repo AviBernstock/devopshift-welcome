@@ -10,4 +10,4 @@ COPY ./src/* .
 
 CMD ["python", "mainbe.py"]
 
-EXPOSE 5004
+EXPOSE 5001
