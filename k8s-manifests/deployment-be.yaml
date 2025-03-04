@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: be
-          image: yanivomc/be-exam:latest
+          image: olego700/fe-exam
           ports:
             - containerPort: 5001
           env:
