@@ -2,7 +2,7 @@ pipeline {
     agent { label 'docker' }
 
     environment {
-        FE_BE = 'fe'
+        FE_BE = 'be'
 
         DOCKERHUB_CREDENTIALS = credentials('docker-creds') // configure jenkins with your credentials 
         DOCKER_REGISTRY = 'frenzy669' //'YOUR DOCKERHUB USERID'
