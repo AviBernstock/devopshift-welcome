@@ -27,8 +27,8 @@ pipeline {
                         steps {
                             
                             script {
-                                sh """echo 'moved to !!!!!!!!!!!!!!!'
-                                    cd !!!!!!!!!
+                                sh """echo 'moved to ${env.HOME_DIR}'
+                                    cd ${env.HOME_DIR}
                                     if ! command -v flake8 &> /dev/null; then
                                         echo 'Installing flake8...'
                                         pip install flake8
@@ -46,8 +46,8 @@ pipeline {
                         steps {
                            
                             script {
-                                sh """echo 'moved to !!!!!!!!!!!!!!!'
-                                    cd !!!!!!!!!!!!
+                                sh """echo 'moved to ${env.HOME_DIR}'
+                                    cd ${env.HOME_DIR}
                                     
                                     if ! command -v bandit &> /dev/null; then
                                         echo 'Installing flake8...'
