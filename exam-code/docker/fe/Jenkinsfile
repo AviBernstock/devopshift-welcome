@@ -75,8 +75,8 @@ pipeline {
         stage('Build Docker Image') { //todo: update the <.....>
             steps {
                 script {   // Locate the Dockerfile under the fe/be projects
-                    sh "docker build -t $DOCKER_REGISTRY/your-app:$BUILD_NUMBER ."
-                    sh "docker tag $DOCKER_REGISTRY/your-app:$BUILD_NUMBER $DOCKER_REGISTRY/your-app:latest"
+                    sh "docker build -t ${env.DOCKER_REGISTRY}/your-app:${env.BUILD_NUMBER} ."
+                    sh "docker tag ${DOCKER_REGISTRY}/your-app:${BUILD_NUMBER} ${DOCKER_REGISTRY}/your-app:latest"
                 }
             }
         }
@@ -84,7 +84,7 @@ pipeline {
         stage('Run Tests in Container') {
             steps {
                 script {
-                    sh "docker run --rm $DOCKER_REGISTRY/your-app:$BUILD_NUMBER pytest tests/"  
+                    sh "docker run --rm ${DOCKER_REGISTRY}/your-app:${BUILD_NUMBER} pytest tests/"  
                 }
             }
         }
@@ -104,9 +104,9 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    sh """echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-                        docker push $DOCKER_REGISTRY/your-app:$BUILD_NUMBER
-                        docker push $DOCKER_REGISTRY/your-app:latest
+                    sh """echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin
+                        docker push ${DOCKER_REGISTRY}/your-app:${BUILD_NUMBER}
+                        docker push ${DOCKER_REGISTRY}/your-app:latest
                     """
                 }
             }
